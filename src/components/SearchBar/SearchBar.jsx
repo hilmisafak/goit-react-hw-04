@@ -1,4 +1,4 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import styles from "./SeachBar.module.css";
 import toast from "react-hot-toast";
 
@@ -7,6 +7,7 @@ const SearchBar = ({ onSubmit }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    const trimmed = query.trim();
     if (trimmed === "") {
       toast.error("Lütfen aramak için bir metin girin.");
       return;
