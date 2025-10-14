@@ -7,7 +7,7 @@ import Loader from "./components/Loader/Loader.jsx";
 import ErrorMessage from "./components/ErrorMessage/ErrorMessage.jsx";
 import LoadMoreBtn from "./components/LoadMoreBtn/LoadMoreBtn.jsx";
 import { fetchImages } from "./services/api.js";
-import "./App.module.css";
+import styles from "./App.module.css";
 
 const App = () => {
   const [query, setQuery] = useState("");
@@ -16,6 +16,7 @@ const App = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
   const [selectedImage, setSelectedImage] = useState(null);
+  const [selectedImageIndex, setSelectedImageIndex] = useState(0);
   const [totalPages, setTotalPages] = useState(0);
 
   useEffect(() => {
@@ -56,7 +57,9 @@ const App = () => {
   };
 
   const handleOpenModal = (image) => {
+    const imageIndex = images.findIndex((img) => img.id === image.id);
     setSelectedImage(image);
+    setSelectedImageIndex(imageIndex);
   };
 
   const handleCloseModal = () => {
@@ -64,19 +67,23 @@ const App = () => {
   };
 
   return (
-    <div>
+    <div className={styles.app}>
       <SearchBar onSubmit={handleSearch} />
-      {error && <ErrorMessage message={error} />}
-      <ImageGallery images={images} onImageClick={handleOpenModal} />
-      {isLoading && <Loader />}
-      {images.length > 0 && page < totalPages && !isLoading && (
-        <LoadMoreBtn onClick={handleLoadMore} />
-      )}
+      <main className={styles.mainContent}>
+        {error && <ErrorMessage message={error} />}
+        <ImageGallery images={images} onImageClick={handleOpenModal} />
+        {isLoading && <Loader />}
+        {images.length > 0 && page < totalPages && !isLoading && (
+          <LoadMoreBtn onClick={handleLoadMore} />
+        )}
+      </main>
       {selectedImage && (
         <ImageModal
           isOpen={!!selectedImage}
           onRequestClose={handleCloseModal}
           image={selectedImage}
+          images={images}
+          currentIndex={selectedImageIndex}
         />
       )}
       <Toaster position="top-right" />

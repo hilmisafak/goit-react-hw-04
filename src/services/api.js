@@ -3,13 +3,6 @@ import axios from "axios";
 const BASE_URL = "https://api.unsplash.com/search/photos";
 const ACCESS_KEY = import.meta.env.VITE_UNSPLASH_ACCESS_KEY;
 
-/**
- * Görselleri Unsplash API'den çeker.
- * @param {string} query - Arama kelimesi
- * @param {number} page - Sayfa numarası
- * @returns {Promise<Object>} - API yanıt nesnesi
- */
-
 export const fetchImages = async (query, page = 1) => {
   try {
     const response = await axios.get(BASE_URL, {

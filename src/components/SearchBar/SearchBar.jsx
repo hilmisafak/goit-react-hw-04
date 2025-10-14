@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import styles from "./SeachBar.module.css";
+import styles from "./SearchBar.module.css";
 import toast from "react-hot-toast";
 
 const SearchBar = ({ onSubmit }) => {
